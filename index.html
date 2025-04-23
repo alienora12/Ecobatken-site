@@ -1,0 +1,384 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭкоБаткен</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(to right, #4CAF50, #2196F3);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            background: #388E3C;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #2196F3;
+        }
+
+        section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #388E3C;
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 0.5rem;
+        }
+
+        .highlight-section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-text {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .photo-text img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-text .text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .photo-text .text h3 {
+            color: #2196F3;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievements ul {
+            list-style: disc;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-details p {
+            margin: 0.5rem 0;
+        }
+
+        .contact-details a {
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-details a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #388E3C;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            .photo-text {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .photo-text img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ЭкоБаткен</h1>
+        <p>Чистый Кыргызстан начинается с Баткена! 🌍</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#about">О проекте</a></li>
+            <li><a href="#history">История</a></li>
+            <li><a href="#team">Команда</a></li>
+            <li><a href="#goals">Цели</a></li>
+            <li><a href="#achievements">Достижения</a></li>
+            <li><a href="#events">Мероприятия</a></li>
+            <li><a href="#clean-batken">Баткен — чистая зона</a></li>
+            <li><a href="#recycling">Цех</a></li>
+            <li><a href="#partners">Партнёры</a></li>
+            <li><a href="#contact">Контакты</a></li>
+            <li><a href="#education">Экопросвещение</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="highlight-section">
+        <h2>Добро пожаловать в ЭкоБаткен</h2>
+        <p>Мы — семейный проект, начатый 16-летней Алиенорой, который превращает Баткен в эталон чистоты. <strong>Чистый Кыргызстан начинается с Баткена!</strong> Вместе мы создаём замкнутую систему переработки отходов и вдохновляем на перемены.</p>
+        <p><strong>Слоган:</strong> Семья за зелёное будущее! 🌱</p>
+        <p><strong>Присоединяйтесь:</strong> Сдавайте вторсырьё и поддержите миссию чистоты!</p>
+    </section>
+
+    <section id="about" class="highlight-section">
+        <h2>О проекте</h2>
+        <p>«ЭкоБаткен» — это инициатива Алиеноры, её мамы Рахат Жороевой и брата Кайрата Абдипаттаева. С 2022 года мы сделали Баткен чище и теперь идём дальше. <strong>Чистый Кыргызстан начинается с Баткена!</strong></p>
+        <p><strong>Миссия:</strong> Замкнутая система переработки для всей страны.</p>
+        <p><strong>Ценности:</strong> Семья, молодёжь, экология.</p>
+        <p><strong>Мировое признание:</strong> Лучший проект по версии ЕС и Эстонии. Проверка ООН завершена за год — рекорд!</p>
+    </section>
+
+    <section id="history" class="highlight-section">
+        <h2>Наш путь</h2>
+        <div class="photo-text">
+            <img src="урны.png" alt="Recycling bins">
+            <div class="text">
+                <h3>2022: Первые шаги</h3>
+                <p>Алиенора запустила «ЭкоБаткен» с идеи урн для раздельного сбора мусора. Вместе с мамой и менторами мы создали уникальный дизайн, который изменил Баткен.</p>
+            </div>
+        </div>
+        <div class="photo-text">
+            <img src="обучение.png" alt="Sorting training">
+            <div class="text">
+                <h3>2023: Образование и сбор</h3>
+                <p>Мы провели 120+ тренингов, обучили 1000+ школьников и собрали 10+ тонн пластика, очистив свалку Баткена.</p>
+            </div>
+        </div>
+        <div class="photo-text">
+            <img src="Аймээрим.png" alt="Eco-center opening">
+            <div class="text">
+                <h3>2024: Масштаб и инновации</h3>
+                <p>26 апреля 2024 мы открыли эко-центр и пункт приёма вторсырья на фестивале «ТРЭШ 6». На фото: Алиенора с ментором Аймээрим Турсалиевой.</p>
+            </div>
+        </div>
+        <p><strong>Цитата Алиеноры:</strong> «Отходы — новые доходы. Мы сделаем весь Кыргызстан чистым, как Баткен!»</p>
+    </section>
+
+    <section id="team" class="highlight-section">
+        <h2>Наша команда</h2>
+        <p><strong>Алиенора:</strong> Основатель, вдохновивший тысячи.<br>
+        <strong>Рахат Жороева:</strong> Мама и поддержка проекта.<br>
+        <strong>Кайрат Абдипаттаев:</strong> Руководитель цеха, мастер инноваций.<br>
+        <strong>Команда:</strong> Волонтёры и жители Баткена.<br>
+        <strong>Девиз:</strong> Семья за зелёное будущее!</p>
+        <div class="photo-text">
+            <img src="мероприятия.png" alt="Team photo">
+            <div class="text">
+                <h3>Вместе мы сильнее</h3>
+                <p>Наша команда на одном из мероприятий, где мы объединили усилия ради чистоты Баткена.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="goals" class="highlight-section">
+        <h2>Наши цели</h2>
+        <p><strong>Сейчас:</strong> Баткен — образец чистоты с урнами, цехом и эко-центром.</p>
+        <p><strong>Будущее:</strong><br>
+        - Масштабировать проект на весь Кыргызстан.<br>
+        - Создать замкнутую систему переработки.<br>
+        - Сделать Кыргызстан чистой страной.</p>
+        <p><strong>Глобально:</strong> Поддерживаем Цели ООН (ЦУР 12 и 6).</p>
+    </section>
+
+    <section id="achievements" class="highlight-section">
+        <h2>Достижения</h2>
+        <div class="photo-text">
+            <img src="Банура.png" alt="Award ceremony">
+            <div class="text">
+                <h3>Мировое признание</h3>
+                <p>Мы стали лучшими по версии ЕС и Эстонии! На фото: Алиенора (справа) с Банура Абдиевой (в центре) на церемонии награждения.</p>
+            </div>
+        </div>
+        <div class="photo-text">
+            <img src="пластик.png" alt="Plastic waste">
+            <div class="text">
+                <h3>10+ тонн пластика</h3>
+                <p>Мы очистили свалку Баткена, переработав более 10 тонн пластика за 3 года.</p>
+            </div>
+        </div>
+        <div class="achievements">
+            <p><strong>Ключевые результаты:</strong></p>
+            <ul>
+                <li>Обучено 1000+ школьников на 120+ тренингах.</li>
+                <li>Эко-центр и пункт приёма открыты 26 апреля 2024.</li>
+                <li>Проверка ООН завершена за год — рекорд!</li>
+            </ul>
+        </div>
+        <p><strong>Отзыв:</strong> «Алиенора и её семья — пример для всех!» — Аймээрим Турсалиева.</p>
+    </section>
+
+    <section id="events" class="highlight-section">
+        <h2>Мероприятия</h2>
+        <p><strong>2023:</strong> 10+ субботников, 6 дебатов, 120+ тренингов.</p>
+        <p><strong>26 апреля 2024:</strong> Фестиваль «ТРЭШ 6» — открытие эко-центра, спектакль для 300 школьников.</p>
+        <p><strong>Планы:</strong> Масштабирование на Кыргызстан.</p>
+    </section>
+
+    <section id="clean-batken" class="highlight-section">
+        <h2>Баткен — чистая зона</h2>
+        <p>«Баткен Таза Аймак» сделал Баткен эталоном чистоты.</p>
+        <p><strong>Результаты:</strong> Свалка очищена, цех перерабатывает 50–300 кг пластика в день.</p>
+        <p><strong>Планы:</strong> Распространить модель на всю страну.</p>
+    </section>
+
+    <section id="recycling" class="highlight-section">
+        <h2>Цех «Баткен Таза Аймак»</h2>
+        <div class="photo-text">
+            <img src="синтепон.png" alt="Sinthon production">
+            <div class="text">
+                <h3>Инновации в действии</h3>
+                <p>Цех под руководством Кайрата Абдипаттаева производит синтепон из пластика, создавая рабочие места и защищая природу.</p>
+            </div>
+        </div>
+        <p><strong>Мощность:</strong> 50–300 кг в день.<br>
+        <strong>Экология:</strong> Меньше свалок, чище природа.</p>
+    </section>
+
+    <section id="partners" class="highlight-section">
+        <h2>Партнёры</h2>
+        <p>Спасибо за поддержку:</p>
+        <ul>
+            <li>DigiKonush и «Лидер»</li>
+            <li>ЕС и Эстония</li>
+            <li>Менторы: Аймээрим Турсалиева, Мунара Молдобаева, Банура Абдиева</li>
+            <li>Тазар, ГЭФ, ПРООН и другие</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="highlight-section">
+        <h2>Контакты</h2>
+        <div class="contact-details">
+            <p>Электронная почта: <a href="mailto:ecobatken@gmail.com">ecobatken@gmail.com</a></p>
+            <p>Телефон: <a href="tel:+996701215552">+996 701 215 552</a></p>
+            <p>Адрес: г. Баткен</p>
+            <p>Instagram: <a href="https://instagram.com/EcoBatken" target="_blank">@EcoBatken</a></p>
+            <p><strong>Помогите нам:</strong> Сдавайте вторсырьё и поддержите проект!</p>
+        </div>
+    </section>
+
+    <section id="education" class="highlight-section">
+        <h2>Экопросвещение</h2>
+        <p><strong>Материалы:</strong> Руководства, советы, видео от Алиеноры.</p>
+        <p><strong>Статистика:</strong> 10+ тонн пластика переработано.</p>
+        <p><strong>Цитата:</strong> «Чистый Кыргызстан начинается с Баткена! Присоединяйтесь!» — Алиенора.</p>
+    </section>
+
+    <footer>
+        <p>© 2025 ЭкоБаткен. Вместе за чистое будущее!</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                const section = document.getElementById(sectionId);
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
