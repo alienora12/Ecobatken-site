@@ -89,6 +89,26 @@
             background: #2196F3;
         }
 
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+            border: none;
+            background: none;
+            padding: 0.5rem;
+        }
+
+        .hamburger-inner {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            display: block;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
         section {
             padding: 2rem;
             max-width: 1200px;
@@ -171,10 +191,51 @@
             header h1 {
                 font-size: 2rem;
             }
-
+            
+            /* Mobile navigation */
+            .hamburger {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                z-index: 101;
+            }
+            
+            nav {
+                padding: 1rem 0;
+            }
+            
             nav ul {
                 flex-direction: column;
-                gap: 0.5rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: #388E3C;
+                padding: 4rem 1rem 1rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+                overflow-y: auto;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav li {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            nav a {
+                display: block;
+                width: 100%;
+                text-align: left;
+                padding: 1rem;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             }
 
             section {
@@ -189,6 +250,14 @@
             .photo-text img {
                 max-width: 100%;
             }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .highlight-section {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -199,7 +268,12 @@
     </header>
 
     <nav>
-        <ul>
+        <button class="hamburger" id="hamburger">
+            <span class="hamburger-inner"></span>
+            <span class="hamburger-inner"></span>
+            <span class="hamburger-inner"></span>
+        </button>
+        <ul id="nav-menu">
             <li><a href="#home">Главная</a></li>
             <li><a href="#about">О проекте</a></li>
             <li><a href="#history">История</a></li>
@@ -370,15 +444,36 @@
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const sectionId = this.getAttribute('href').substring(1);
                 const section = document.getElementById(sectionId);
+                
+                // Close the mobile menu
+                navMenu.classList.remove('active');
+                
+                // Scroll to section
                 section.scrollIntoView({ behavior: 'smooth' });
             });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
         });
     </script>
 </body>
 </html>
+``` 
