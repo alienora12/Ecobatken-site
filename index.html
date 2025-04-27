@@ -197,7 +197,7 @@
                 display: block;
                 position: absolute;
                 top: 1rem;
-                right: 1rem;
+                left: 1rem; /* Changed from right to left */
                 z-index: 101;
             }
             
@@ -209,19 +209,19 @@
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                right: -100%;
+                left: -100%; /* Changed from right: -100% to left: -100% */
                 width: 80%;
                 max-width: 300px;
                 height: 100vh;
                 background: #388E3C;
                 padding: 4rem 1rem 1rem;
-                transition: right 0.3s ease;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+                transition: left 0.3s ease; /* Changed from right to left */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Changed shadow direction */
                 overflow-y: auto;
             }
             
             nav ul.active {
-                right: 0;
+                left: 0; /* Changed from right: 0 to left: 0 */
             }
             
             nav li {
@@ -476,4 +476,3 @@
     </script>
 </body>
 </html>
-``` 
