@@ -93,18 +93,17 @@
         .hamburger {
             display: none;
             cursor: pointer;
-            color: white;
+            color: black; /* Changed to black */
             font-size: 1.5rem;
-            border: 2px solid black; /* Added black border */
+            border: none;
             background: none;
             padding: 0.5rem;
-            border-radius: 4px; /* Added rounded corners for better look */
         }
 
         .hamburger-inner {
             width: 30px;
             height: 3px;
-            background-color: white;
+            background-color: black; /* Changed to black */
             display: block;
             margin: 6px 0;
             transition: 0.4s;
@@ -197,10 +196,9 @@
             .hamburger {
                 display: block;
                 position: absolute;
-                top: 1.3rem; /* Moved down a bit from 1rem */
-                left: 1rem; /* Changed from right to left */
+                top: 1.5rem; /* Moved down from 1rem to 1.5rem */
+                right: 1rem; /* Changed back to right from left */
                 z-index: 101;
-                box-shadow: 0 0 3px rgba(0, 0, 0, 0.5); /* Added subtle shadow for depth */
             }
             
             nav {
@@ -211,19 +209,19 @@
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                left: -100%; /* Changed from right: -100% to left: -100% */
+                right: -100%; /* Changed back to right from left */
                 width: 80%;
                 max-width: 300px;
                 height: 100vh;
                 background: #388E3C;
                 padding: 4rem 1rem 1rem;
-                transition: left 0.3s ease; /* Changed from right to left */
-                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Changed shadow direction */
+                transition: right 0.3s ease; /* Changed back to right from left */
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Changed shadow direction back */
                 overflow-y: auto;
             }
             
             nav ul.active {
-                left: 0; /* Changed from right: 0 to left: 0 */
+                right: 0; /* Changed back to right from left */
             }
             
             nav li {
